@@ -1,0 +1,54 @@
+---
+title: "Some car data"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+```{r}
+library(flexdashboard)
+library(tidyverse)
+mtcars2 <- mtcars[, c("mpg", "cyl", "wt")]
+```
+
+# 1st page - plots
+
+## 1st row {data-height=700}
+
+### One plot
+```{r}
+
+```
+
+### Another plot
+```{r}
+
+```
+
+### One last plot
+```{r}
+
+```
+
+## 2nd row {data-height=300}
+
+### A value box
+```{r}
+
+```
+
+### A value gauge
+```{r}
+
+```
+
+### Some text
+
+
+
+# 2nd page - table
+
+### A table
+```{r}
+
+```

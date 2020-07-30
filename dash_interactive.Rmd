@@ -1,0 +1,85 @@
+---
+title: "Some car data"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+```{r}
+library(flexdashboard)
+library(tidyverse)
+mtcars2 <- mtcars[, c("mpg", "cyl", "wt")]
+```
+
+# 1st page - plots
+
+## 1st row {data-height=700}
+
+### One plot
+```{r}
+plotly::ggplotly(mtcars2 %>% 
+    ggplot(aes(mpg, wt)) + geom_point())
+```
+
+### Another plot
+```{r}
+plotly::ggplotly(mtcars2 %>% 
+    ggplot(aes(factor(cyl), mpg)) + geom_boxplot())
+```
+
+### One last plot
+```{r}
+plotly::ggplotly(mtcars2 %>% 
+    ggplot(aes(cyl, wt)) + geom_smooth())
+```
+
+## 2nd row {data-height=300}
+
+### A value box
+```{r}
+valueBox(120, icon = "glyphicon-time")
+```
+
+### A value gauge
+```{r}
+gauge(80, min = 0, max = 100, symbol = '%', 
+      gaugeSectors(success = c(80, 100), warning = c(40, 79), danger = c(0, 39)))
+```
+
+### Some text
+
+Boy do we use this mtcars dataset a lot or what?
+
+# 2nd page - table
+
+```{r}
+create_dt <- function(x){
+  DT::datatable(x, # your table
+                extensions = 'Buttons', # Create buttons for export, as defined in options 
+                options = list(dom = 'Blfrtip', buttons = c('copy', 'csv'), bPaginate = FALSE),
+                rownames = TRUE, 
+                class = 'cell-border stripe', # styling
+                filter = 'top')
+}
+
+# dom details:
+# B - Buttons
+# l - length changing input control
+# f - filtering input
+# r - processing display element
+# t - The table!
+# i - Table information summary
+# p - pagination control
+```
+
+### A table
+```{r}
+create_dt(mtcars2)
+```
+
+```{r}
+# References used:
+# https://www.r-bloggers.com/vignette-downloadable-tables-in-rmarkdown-with-the-dt-package/
+# https://jjallaire.shinyapps.io/shiny-ggplot2-brushing/
+# https://rmarkdown.rstudio.com/flexdashboard/index.html
+```
